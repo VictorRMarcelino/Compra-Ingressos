@@ -2,8 +2,11 @@ Program Trabalho;
 
 //Constantes
 const TIPO_COMPRADOR_SOCIO = 1;
+const _TIPO_COMPRADOR_SOCIO = 'Sócio';
 const TIPO_COMPRADOR_TORCEDOR = 2;
+const _TIPO_COMPRADOR_TORCEDOR = 'Torcedor';
 const TIPO_COMPRADOR_VISITANTE = 3;
+const _TIPO_COMPRADOR_VISITANTE = 'Visitante';
 
 const ARQUIBANCADA_COBERTA = 1;
 const _ARQUIBANCADA_COBERTA = 'Coberta';
@@ -26,6 +29,8 @@ const PRECO_VISITANTES = 80;
 //Tipos
 type filaSocios = array[1..MAX_SOCIOS] of integer;
 type filaVisitantes = array[1..MAX_VISITANTES] of integer; 
+type listaLugarSocios = array[1..MAX_SOCIOS] of integer;
+type listaLugarVisitantes = array[1..MAX_VISITANTES] of integer; 
 
 {
 	Verifica se foi alcançado o limite máximo de sócios
@@ -60,6 +65,15 @@ begin;
 end;
 
 {
+	Realiza a compra do ingresso de um sócio
+}
+procedure comprarIngressoSocio();
+	//@todo adicionar processo de compra do ingresso do sócio
+begin;
+	
+end;
+
+{
 	Questiona ao torcedor qual bancada ele deseja comprar o ingresso
 	@return integer
 }
@@ -74,38 +88,32 @@ begin;
 end;
 
 {
-	Decide para qual arquibancada o ingresso será vendido
-	@param integer tipoComprador - Código do tipo de comprador
-	@return integer
+	Realiza a compra do ingresso de um torcedor
 }
-function escolheArquibancada(tipoComprador: integer): integer;
+procedure comprarIngressoTorcedor();
 var arquibancada: integer;
 begin;
-	if (tipoComprador = TIPO_COMPRADOR_SOCIO) then
+	while ((arquibancada <> ARQUIBANCADA_COBERTA) AND (arquibancada <> ARQUIBANCADA_GERAL)) do
 		begin;
-			escolheArquibancada := ARQUIBANCADA_COBERTA;		
-		end
-	else if (tipoComprador = TIPO_COMPRADOR_TORCEDOR) then
-		begin;
-			while ((arquibancada <> ARQUIBANCADA_COBERTA) AND (arquibancada <> ARQUIBANCADA_GERAL)) do
-				begin;
-					arquibancada := perguntaArquibancadaTorcedor();
-				end;
-		end
-	else if (tipoComprador = TIPO_COMPRADOR_VISITANTE) then
-		begin;
-			escolheArquibancada := ARQUIBANCADA_GERAL;	
+			arquibancada := perguntaArquibancadaTorcedor();
 		end;
 end;
 
 {
-	Realiza a compra do ingresso
-	@param integer tipoComprador
+	Realiza a compra do ingresso de um visitante
 }
-procedure comprarIngresso(tipoComprador: integer);
-var arquibancada: integer;
+procedure comprarIngressoVisitante(aLista: listaLugarVisitantes);
+var lugar, comprouIngresso: integer;
 begin;
-	arquibancada := escolheArquibancada(tipoComprador);	
+	while(comprouIngresso = 0) do
+		begin;
+			writeln('Para qual lugar você desejar comprar? (Escolha um número de 1 a ', MAX_VISITANTES);
+	
+			if (aLista[lugar] = 1) then
+				writeln('Este lugar já está ocupado!')
+			else
+				//@todo adiciona item na lista de visitantes
+		end;
 end; 
 
 {
@@ -115,6 +123,8 @@ procedure iniciaMenu();
 var opcao: integer;
 var aFilaSocios: filaSocios;
 var aFilaVisitantes: filaVisitantes;
+var aListaLugarSocios: listaLugarSocios;
+var aListaLugarVisitantes: listaLugarVisitantes;
 var iQuantidadeSocios, iQuantidadeVisitantes: integer;
 begin;
 	while(opcao <> 4) do
@@ -122,10 +132,10 @@ begin;
 			writeln ('    MENU    ');
 			writeln ('------------');
 			writeln;
-			writeln (' 1 - Comprar Ingresso (Sócio)');
-			writeln (' 2 - Comprar Ingresso (Torcedor)');
-			writeln (' 3 - Comprar Ingresso (Visitante)');
-			writeln (' 4 - sair');
+			writeln (TIPO_COMPRADOR_SOCIO, ' - Comprar Ingresso (', _TIPO_COMPRADOR_SOCIO , ')');
+			writeln (TIPO_COMPRADOR_TORCEDOR, ' - Comprar Ingresso (', _TIPO_COMPRADOR_TORCEDOR , ')');
+			writeln (TIPO_COMPRADOR_VISITANTE, ' - Comprar Ingresso (', _TIPO_COMPRADOR_VISITANTE , ')');
+			writeln ('4 - sair');
 			writeln;
 			readln(opcao);
 			
@@ -137,12 +147,12 @@ begin;
 						end
 					else
 						begin;
-							comprarIngresso(TIPO_COMPRADOR_SOCIO);
+							comprarIngressoSocio();
 							iQuantidadeSocios := iQuantidadeSocios + 1;	
 						end;
 				end
 			else if (opcao = 2) then
-				comprarIngresso(TIPO_COMPRADOR_TORCEDOR)
+				comprarIngressoTorcedor()
 			else if (opcao = 3) then
 				if (validaLimiteCompradorSocio(aFilaSocios, iQuantidadeSocios) = true) then
 						begin;
@@ -150,7 +160,7 @@ begin;
 						end
 					else
 						begin;
-							comprarIngresso(TIPO_COMPRADOR_VISITANTE);
+							comprarIngressoVisitante(aListaLugarVisitantes);
 							iQuantidadeVisitantes := iQuantidadeVisitantes + 1;
 						end;	
 		end;
