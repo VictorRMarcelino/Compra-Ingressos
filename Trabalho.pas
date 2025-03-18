@@ -28,9 +28,12 @@ const PRECO_VISITANTES = 80;
 
 //Tipos
 type filaSocios = array[1..MAX_SOCIOS] of integer;
-type filaVisitantes = array[1..MAX_VISITANTES] of integer; 
-type listaLugarSocios = array[1..MAX_SOCIOS] of integer;
-type listaLugarVisitantes = array[1..MAX_VISITANTES] of integer; 
+type filaVisitantes = array[1..MAX_VISITANTES] of integer;
+ 
+type listaLugarCoberturaSocios = array[1..MAX_COBERTA_SOCIOS] of integer;
+type listaLugarCoberturaTorcedores = array[1..MAX_COBERTA_TORCEDORES] of integer;
+type listaLugarGeralTorcedores = array[1..MAX_GERAL_TORCEDORES] of integer; 
+type listaLugarGeralVisitantes = array[1..MAX_GERAL_VISITANTES] of integer;
 
 {
 	Verifica se foi alcançado o limite máximo de sócios
@@ -49,28 +52,46 @@ begin;
 end;
 
 {
-	Verifica se foi alcançado o limite máximo de visitantes
-	@param filaSocios aFila - Array da fila de visitantes
-	@param integer iQuantidadeAtual - Quantidade atual de elementos na fila de visitantes
-	@return boolean
+	Marca um lugar da coberta dos sócios como utilizada
+	@param listaLugarSocios aLista
+	@param integer lugarEscolhido
 }
-function validaLimiteCompradorVisitante(aFila: filaVisitantes; iQuantidadeAtual: integer): boolean;
+procedure marcaLugarCobertaSocio(var aLista: listaLugarSocios, lugarEscolhido: integer);
 begin;
-	validaLimiteCompradorVisitante := false;
-	
-	if (iQuantidadeAtual = MAX_VISITANTES)	then
-		begin;
-			validaLimiteCompradorVisitante := true;
-		end;
+	aLista[lugarEscolhido] := 1;
+end;
+
+{
+	Verifica se determinado lugar está disponível para os sócios
+	@param listaLugarSocios aLista
+	@param integer lugarEscolhido 
+}
+function validaLugarCobertaDisponivelSocio(aLista: listaLugarSocios, lugarEscolhido: integer): integer;
+begin;
+	validaLugarCobertaDisponivelSocio := (aLista[lugarEscolhido] = 1);
 end;
 
 {
 	Realiza a compra do ingresso de um sócio
+	@param listaLugarSocios aLista
 }
-procedure comprarIngressoSocio();
-	//@todo adicionar processo de compra do ingresso do sócio
+procedure comprarIngressoSocio(var aLista: listaLugarSocios);
+var lugarDisponivel, lugarDesejado: integer;
 begin;
-	
+	while (lugarDisponivel <> 0) do
+		begin;
+			writeln('Informe o número do lugar desejado');
+			readln(lugarDisponivel);
+			if (validaLugarCobertaDisponivelSocio(aLista, lugarDesejado) = true) then
+				begin;
+					writeln('O lugar desejado já foi escolhido! Escolha outro!');
+				end
+			else 
+				begin;
+					marcaLugarCobertaSocio(aLista, lugarDesejado);
+					lugarDisponivel := 1;
+				end;
+		end;	
 end;
 
 {
@@ -100,21 +121,58 @@ begin;
 end;
 
 {
+	Verifica se foi alcançado o limite máximo de visitantes
+	@param filaSocios aFila - Array da fila de visitantes
+	@param integer iQuantidadeAtual - Quantidade atual de elementos na fila de visitantes
+	@return boolean
+}
+function validaLimiteCompradorVisitante(aFila: filaVisitantes; iQuantidadeAtual: integer): boolean;
+begin;
+	validaLimiteCompradorVisitante := false;
+	
+	if (iQuantidadeAtual = MAX_VISITANTES)	then
+		begin;
+			validaLimiteCompradorVisitante := true;
+		end;
+end;
+
+{
+	Verifica se determinado lugar está disponível para os sócios
+	@param listaLugarSocios aLista
+	@param integer listaLugarVisitantes 
+}
+function validaLugarGeralDisponivelVisitantes(aLista: listaLugarVisitantes, lugarEscolhido: integer): integer;
+begin;
+	validaLugarGeralDisponivelVisitantes := (aLista[lugarEscolhido] = 1);
+end;
+
+{
 	Realiza a compra do ingresso de um visitante
+	@param listaLugarVisitantes aLista
 }
 procedure comprarIngressoVisitante(aLista: listaLugarVisitantes);
-var lugar, comprouIngresso: integer;
+var lugarDisponivel, lugarDesejado: integer;
 begin;
-	while(comprouIngresso = 0) do
+	while (lugarDisponivel <> 0) do
 		begin;
-			writeln('Para qual lugar você desejar comprar? (Escolha um número de 1 a ', MAX_VISITANTES);
-	
-			if (aLista[lugar] = 1) then
-				writeln('Este lugar já está ocupado!')
-			else
-				//@todo adiciona item na lista de visitantes
+			writeln('Informe o número do lugar desejado');
+			readln(lugarDisponivel);
+			if (validaLugarCobertaDisponivelSocio(aLista, lugarDesejado) = true) then
+				begin;
+					writeln('O lugar desejado já foi escolhido! Escolha outro!');
+				end
+			else 
+				begin;
+					marcaLugarCobertaSocio(aLista, lugarDesejado);
+					lugarDisponivel := 1;
+				end;
 		end;
 end; 
+
+procedure geraRelatorioFinal(quantidadeSocios: integer, quantidadeVisitantes: integer);
+	writeln('Total por Tipo de Ingresso');
+begin;
+end;
 
 {
 	Inicia o menu de compra dos ingressos
@@ -123,8 +181,8 @@ procedure iniciaMenu();
 var opcao: integer;
 var aFilaSocios: filaSocios;
 var aFilaVisitantes: filaVisitantes;
-var aListaLugarSocios: listaLugarSocios;
-var aListaLugarVisitantes: listaLugarVisitantes;
+var aListaLugarCobertaSocios: listaLugarCoberturaSocios;
+var aListaLugarGeralVisitantes: listaLugarGeralVisitantes;
 var iQuantidadeSocios, iQuantidadeVisitantes: integer;
 begin;
 	while(opcao <> 4) do
@@ -147,14 +205,14 @@ begin;
 						end
 					else
 						begin;
-							comprarIngressoSocio();
+							comprarIngressoSocio(aListaLugarCobertaSocios);
 							iQuantidadeSocios := iQuantidadeSocios + 1;	
 						end;
 				end
 			else if (opcao = 2) then
 				comprarIngressoTorcedor()
 			else if (opcao = 3) then
-				if (validaLimiteCompradorSocio(aFilaSocios, iQuantidadeSocios) = true) then
+				if (validaLimiteCompradorVisitante(aFilaVisitantes, iQuantidadeVisitantes) = true) then
 						begin;
 							write('A quantidade máxima de visitantes foi atingida! Você pode tentar comprar ingresso como torcedor.');
 						end
@@ -164,6 +222,8 @@ begin;
 							iQuantidadeVisitantes := iQuantidadeVisitantes + 1;
 						end;	
 		end;
+		
+		geraRelatorioFinal(iQuantidadeSocios, iQuantidadeVisitantes);
 end;
 
 Begin
