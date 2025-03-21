@@ -114,18 +114,19 @@ end;
 
 {
 	Realiza pesquisa binária para encontrar o índice de um determinado elemento
+	@return integer
 }
 function pesquisaBinaria(var lista:listaLugares; var quantidadeElementos, elemento: integer): integer;
-var inicio, fim, meio: integer;
+var inicio, fim, meio, achouElemento: integer;
 begin;
-	pesquisaBinaria := 0;
-	
+	achouElemento := 0;
 	inicio := 1;
+	meio := 1;
 	fim := quantidadeElementos;
-	while inicio <= fim do
+	while ((inicio <= fim) AND (achouElemento = 0)) do
 		begin;
 			meio := (inicio + fim) div 2;
-			if (lista[meio] < elemento) then1
+			if (lista[meio] < elemento) then
 				begin;
 					inicio := meio + 1;
 				end
@@ -136,6 +137,7 @@ begin;
 			else 
 				begin;
 					pesquisaBinaria := meio;
+					achouElemento := 1;
 				end;
 		end;
 end;
@@ -403,6 +405,7 @@ begin;
 					writeln('');
 				end;
 		end;
+	writeln('');
 end;
 
 {
@@ -445,7 +448,7 @@ begin;
 					exibeLocaisDisponiveis(lista, quantidadeLugares);
 					readln(lugarDesejado);
 			
-					if (validaLugarInformadoIsValido(listaLugares, quantidadeLugares, lugarDesejado) = true) then
+					if (validaLugarInformadoIsValido(lista, quantidadeLugares, lugarDesejado) = true) then
 						begin;
 								removeLugarDisponivel(lista, quantidadeLugares, lugarDesejado);
 								removeCompradorFila(fila, quantidadeFila);
@@ -492,7 +495,7 @@ end;
 	Inicia o menu de compra de ingressos
 }
 procedure iniciaMenu();
-var opcao, finalizouCompras, totalSocios, totalCobertura, totalGeral, totalVisitantes, quantidadeMaximaCoberta, quantidadeMaximaGeral: integer;
+var opcao, totalSocios, totalCobertura, totalGeral, totalVisitantes, quantidadeMaximaCoberta, quantidadeMaximaGeral: integer;
 
 var filaSocios, filaTorcedoresCoberta, filaTorcedoresGeral, filaVisitantes: filaComprador;
 var quantidadeSocios, quantidadeTorcedoresCoberta, quantidadeTorcedoresGeral, quantidadeVisitantes: integer;
@@ -504,15 +507,15 @@ var listaCoberta, listaGeral: listaLugares;
 var quantidadeLugaresCoberta, quantidadeLugaresGeral: integer;
 
 begin;
-	finalizouCompras := 0;
 	quantidadeMaximaCoberta := MAX_COBERTA;
 	quantidadeMaximaGeral := MAX_GERAL;
+	writeln('Aguarde! Estamos carregando os ingressos disponíveis');
 	carregaPilhaIngressos(pilhaIngressosCoberta, quantidadeIngressosCoberta, quantidadeMaximaCoberta);
-	carregaPilhaIngressos(pilhaIngressosGeral, quantidadeIngressosGeral, quantidadeMaximaGeral);
+	carregaPilhaIngressos(pilhaIngressosGeral	 , quantidadeIngressosGeral	 , quantidadeMaximaGeral);
 	carregaListaLugares(listaCoberta, quantidadeLugaresCoberta, quantidadeMaximaCoberta);
-	carregaListaLugares(listaGeral, quantidadeLugaresGeral, quantidadeMaximaGeral);
+	carregaListaLugares(listaGeral	, quantidadeLugaresGeral	, quantidadeMaximaGeral);
 	
-	while(finalizouCompras = 0) do
+	while(opcao <> 5) do
 		begin;
 			writeln ('    MENU    ');
 			writeln ('------------');
@@ -529,21 +532,25 @@ begin;
 				begin;
 					insereCompradorFila(filaSocios, quantidadeSocios, MAX_SOCIOS);  
 					totalSocios := totalSocios + PRECO_SOCIOS;
+					writeln('Comprador entrou na fila de Sócios com sucesso!');
 				end
 			else if (opcao = 2) then
 				begin;
 					insereCompradorFila(filaTorcedoresCoberta, quantidadeTorcedoresCoberta, MAX_TORCEDORES_COBERTA);
 					totalCobertura := totalCobertura + PRECO_COBERTA;
+					writeln('Comprador entrou na fila de Torcedores (Coberta) com sucesso!');
 				end
 			else if (opcao = 3) then
 				begin;
 					insereCompradorFila(filaTorcedoresGeral, quantidadeTorcedoresGeral, MAX_TORCEDORES_GERAL);
 					totalGeral := totalGeral + PRECO_GERAL;
+					writeln('Comprador entrou na fila de Torcedores (Geral) com sucesso!');
 				end
 			else if (opcao = 4) then
 				begin;
 					insereCompradorFila(filaVisitantes, quantidadeVisitantes, MAX_VISITANTES);
 					totalVisitantes := totalVisitantes + PRECO_VISITANTES;
+					writeln('Comprador entrou na fila de Visitantes com sucesso!');
 				end
 			else if (opcao = 5) then
 				begin;
@@ -551,7 +558,6 @@ begin;
 					realizaVendaIngressos(filaTorcedoresCoberta, quantidadeTorcedoresCoberta, quantidadeIngressosCoberta, listaCoberta, quantidadeLugaresCoberta, TIPO_COMPRADOR_TORCEDOR_COBERTA);
 					realizaVendaIngressos(filaTorcedoresGeral	 , quantidadeTorcedoresGeral  , quantidadeIngressosGeral  , listaGeral  , quantidadeLugaresGeral  , TIPO_COMPRADOR_TORCEDOR_GERAL);
 					realizaVendaIngressos(filaVisitantes		   , quantidadeVisitantes       , quantidadeIngressosGeral  , listaGeral  , quantidadeLugaresGeral  , TIPO_COMPRADOR_VISITANTE);
-					finalizouCompras := 1;
 				end;	
 		end;
 		
