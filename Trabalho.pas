@@ -1,291 +1,6 @@
 //Program Trabalho;
-//
-//Constantes
-//const TIPO_COMPRADOR_SOCIO = 1;
-//const _TIPO_COMPRADOR_SOCIO = 'Sócio';
-//const TIPO_COMPRADOR_TORCEDOR_COBERTA = 2;
-//const _TIPO_COMPRADOR_TORCEDOR_COBERTA = 'Torcedor - Coberta';
-//const TIPO_COMPRADOR_TORCEDOR_GERAL = 3;
-//const _TIPO_COMPRADOR_TORCEDOR_GERAL = 'Torcedor - Geral';
-//const TIPO_COMPRADOR_VISITANTE = 4;
-//const _TIPO_COMPRADOR_VISITANTE = 'Visitante';
-//
-//Quantidade máxima de pessoas por arquibancada
-//const MAX_COBERTA = 2000;
-//const MAX_GERAL = 1000;
-//
-//Quantidade de pessoas por lugar e tipo
-//const MAX_COBERTA_SOCIOS = 500;
-//const MAX_GERAL_TORCEDORES = 700;
-//
-//Quantidade máxima de membros por tipo
-//const MAX_SOCIOS = 500;
-//const MAX_TORCEDORES_COBERTA = 1500;
-//const MAX_TORCEDORES_GERAL = 700;
-//const MAX_VISITANTES = 300;
-//
-//const PRECO_COBERTA = 100;
-//const PRECO_SOCIOS = 50;
-//const PRECO_GERAL = 40;
-//const PRECO_VISITANTES = 80;
-//
-//type filaComprador = array[1..3000] of integer;
-//type pilhaIngressos = array[1..3000] of integer;
-//type listaLugar = array[1..3000] of integer;
-//
-//{
-// =====================================================================================================
-// =========================================== Métodos Gerais ==========================================
-// =====================================================================================================
-//}
-//
-//{
-// 	Valida se o lugar informado válido
-// 	@param integer valorInformado
-// 	@param integer valorMinimo
-// 	@param integer valorMaximo
-//}
-//function validaLugarInformadoIsValido(lugarInformado, valorMinimo, valorMaximo): boolean;
-//begin;
-//	validaLugarInformadoIsValido := ((lugarInfomado >= valorMinimo) AND (lugarInformado <= valorMaximo));	
-//end;
-//
-//{
-// =====================================================================================================
-// =============================================== SÓCIO ===============================================
-// ===================================================================================================== 
-//}
-//
-//{
-//	Verifica se foi alcançado o limite máximo de sócios
-//	@param filaSocios aFila - Array da fila de sócios
-//	@param integer iQuantidadeAtual - Quantidade atual de elementos na fila de sócios
-//	@return boolean
-//}
-//function validaLimiteCompradorSocio(aFila: filaSocios; iQuantidadeAtual: integer): boolean;
-//begin;
-//	validaLimiteCompradorSocio := false;
-//	
-//	if (iQuantidadeAtual = MAX_SOCIOS)	then
-//		begin;
-//			validaLimiteCompradorSocio := true;
-//		end;
-//end;
-//
-//{
-//	Realiza a inclusão de um novo comprador na fila de sócios
-//	@param aFila filaSocios
-//	@param integer iQuantidadeAtual
-//}
-//procedure insereSocioFila(var aFila: filaSocios; var iQuantidadeAtual: integer);
-//var nomeSocio: string;
-//begin;
-//	writeln('Qual o seu nome?');
-//	readln(nomeSocio);
-//	iQuantidadeAtual := iQuantidadeAtual + 1;
-//	aFila[iQuantidadeAtual] := nomeSocio;
-//end;
-//
-//{
-//	Marca um lugar da coberta dos sócios como utilizada
-//	@param listaLugarSocios aLista
-//	@param integer lugarEscolhido
-//	@param integer numeroSocio
-//}
-//procedure marcaLugarCobertaSocio(var aLista: listaLugarCobertaSocios; lugarEscolhido: integer; numeroSocio: integer);
-//begin;
-//	aLista[lugarEscolhido] := numeroSocio;
-//end;
-//
-//{
-//	Verifica se determinado lugar está disponível para os sócios
-//	@param listaLugarCobertaSocios aLista
-//	@param integer lugarEscolhido
-//	@return boolean 
-//}
-//function validaLugarCobertaDisponivelSocio(aLista: listaLugarCobertaSocios; lugarEscolhido: integer): boolean;
-//var lugarDisponivel: integer;
-//begin;
-//	validaLugarCobertaDisponivelSocio := (aLista[lugarEscolhido] <> 0);   
-//end;
-//
-//procedure exibeLocaisDisponiveisCobertaSocios(aLista: listaLugarCobertaSocios);
-//var i: integer;
-//begin;
-//	for i := 1 to MAX_COBERTA_SOCIOS do
-//		begin;
-//			if (aLista[i] = 0) then
-//				begin;
-//					write(i:3:0, ' - Disponível ');
-//				end;
-//			
-//			if (i MOD 5 = 0) then
-//				begin;
-//					writeln('');
-//				end;
-//		end;
-//end;
-//
-//{
-//	Realiza a compra do ingresso de um sócio
-//	@param listaLugarSocios aLista
-//	@param integer numeroSocio
-//}
-//procedure comprarIngresso(var aLista: listaLugarCobertaSocios; numeroSocio: integer);
-//var lugarDisponivel, lugarDesejado: integer;
-//begin;
-//	while (lugarDisponivel = 0) do
-//		begin;
-//			writeln('Ingresso comprado com sucesso por R$', PRECO_SOCIOS, ' reais!');
-//			writeln('Escolha o lugar desejado para a arquibancada coberta (Sócios)');
-//			exibeLocaisDisponiveisCobertaSocios(aLista);
-//			readln(lugarDesejado);
-//			
-//			if (validaLugarInformadoIsValido(lugarDesejado, 1, MAX_COBERTA_SOCIOS) == true) then
-//				begin;
-//					if (validaLugarCobertaDisponivelSocio(aLista, lugarDesejado) = true) then
-//						begin;
-//							clrscr;
-//							writeln('O lugar desejado não está disponível! Escolha outro!');
-//						end
-//					else 
-//						begin;
-//							marcaLugarCobertaSocio(aLista, lugarDesejado, numeroSocio);
-//							lugarDisponivel := 1;
-//						end;
-//					end
-//			else 
-//				begin;
-//					writeln('O lugar informado é inválido! Escolha outro!');
-//				end;
-//		end;	
-//end;
-//
-//{
-// =====================================================================================================
-// ============================================= RELATÓRIO =============================================
-// =====================================================================================================
-//}
-//
-//{
-//	Gera o relatório com o total arrecadado por tipo e o total geral
-//	@param integer quantidadeSocios
-//	@param integer quantidadeTorcedoresCoberta
-//	@param integer quantidadeTorcedoresGeral
-//	@param integer quantidadeVisitantes
-//}
-//procedure geraRelatorioFinal(quantidadeSocios, quantidadeTorcedoresCoberta, quantidadeTorcedoresGeral, quantidadeVisitantes: integer);
-//var totalSocios, totalTorcedoresCoberta, totalTorcedoresGeral, totalVisitantes: integer;
-//begin;
-//	totalSocios := (quantidadeSocios * PRECO_SOCIOS);
-//	totalTorcedoresCoberta := (quantidadeTorcedoresCoberta * PRECO_COBERTA);
-//	totalTorcedoresGeral := (quantidadeTorcedoresGeral * PRECO_GERAL);
-//	totalVisitantes := (quantidadeVisitantes * PRECO_VISITANTES);
-//	clrscr;
-//	writeln('Total Arrecadado por Tipo de Ingresso:');
-//	writeln('=====================================');
-//	writeln(_TIPO_COMPRADOR_SOCIO    				, ': R$', totalSocios:4:2, ' reais');
-//	writeln(_TIPO_COMPRADOR_TORCEDOR_COBERTA, ': R$', totalTorcedoresCoberta:4:2, ' reais');
-//	writeln(_TIPO_COMPRADOR_TORCEDOR_GERAL  , ': R$', totalTorcedoresGeral:4:2, ' reais');
-//	writeln(_TIPO_COMPRADOR_VISITANTE			  , ': R$', totalVisitantes:4:2, ' reais');
-//	writeln('=====================================');
-//	writeln('Total Arrecadado: R$', (totalSocios + totalTorcedoresCoberta + totalTorcedoresGeral + totalVisitantes):6:2);
-//	writeln('=====================================');
-//end;
-//
-//{
-// =====================================================================================================
-// =============================================== MENU ================================================
-// =====================================================================================================
-//}
-//
-//{
-//	Inicia o menu de compra dos ingressos
-//}
-//procedure iniciaMenu();
-//var opcao: integer;
-//
-//var aFilaSocios: filaSocios;
-//var aFilaTorcedoresCoberta: filaTorcedoresCoberta;
-//var aFilaTorcedoresGeral: filaTorcedoresGeral;
-//var aFilaVisitantes: filaVisitantes;
-//
-//var aListaLugarCobertaSocios: listaLugarCobertaSocios;
-//var aListaLugarCobertaTorcedores: listaLugarCobertaTorcedores;
-//var aListaLugarGeralTorcedores: listaLugarGeralTorcedores; 
-//var aListaLugarGeralVisitantes: listaLugarGeralVisitantes;
-//
-//var iQuantidadeSocios, iQuantidadeTorcedoresCoberta, iQuantidadeTorcedoresGeral, iQuantidadeVisitantes: integer;
-//begin;
-//	while(opcao <> 5) do
-//		begin;
-//			writeln ('    MENU    ');
-//			writeln ('------------');
-//			writeln;
-//			writeln (TIPO_COMPRADOR_SOCIO, ' - Comprar Ingresso (', _TIPO_COMPRADOR_SOCIO, ')');
-//			writeln (TIPO_COMPRADOR_TORCEDOR_COBERTA, ' - Comprar Ingresso (', _TIPO_COMPRADOR_TORCEDOR_COBERTA, ')');
-//			writeln (TIPO_COMPRADOR_TORCEDOR_GERAL, ' - Comprar Ingresso (', _TIPO_COMPRADOR_TORCEDOR_GERAL, ')');
-//			writeln (TIPO_COMPRADOR_VISITANTE, ' - Comprar Ingresso (', _TIPO_COMPRADOR_VISITANTE, ')');
-//			writeln ('5 - sair');
-//			writeln;
-//			readln(opcao);
-//			clrscr;
-//			if (opcao = 1) then
-//				begin;
-//					if (validaLimiteCompradorSocio(aFilaSocios, iQuantidadeSocios) = true) then
-//						begin;
-//							write('A quantidade máxima de sócios foi atingida! Você pode tentar comprar ingresso como torcedor.');
-//						end
-//					else
-//						begin;
-//							insereSocioFila(aFilaSocios, iQuantidadeSocios);
-//							comprarIngressoSocio(aListaLugarCobertaSocios, iQuantidadeSocios);
-//						end;                                                                             
-//				end
-//			else if (opcao = 2) then
-//				begin;
-//					if (validaLimiteCompradorTorcedorCoberta(aFilaTorcedoresCoberta, iQuantidadeTorcedoresCoberta) = true) then
-//						begin;
-//							write('A quantidade máxima de torcedores na arquibancada coberta foi atingida! Você pode tentar comprar um ingresso na geral');
-//						end
-//					else
-//						begin;
-//							insereTorcedorCobertaFila(aFilaTorcedoresCoberta, iQuantidadeTorcedoresCoberta);
-//							comprarIngressoTorcedorCoberta(aListaLugarCobertaTorcedores, iQuantidadeTorcedoresCoberta);
-//						end;
-//				end	
-//			else if (opcao = 3) then
-//				begin;
-//					if (validaLimiteCompradorTorcedorCoberta(aFilaTorcedoresGeral, iQuantidadeTorcedoresGeral) = true) then
-//						begin;
-//							write('A quantidade máxima de torcedores na arquibancada geral foi atingida!');
-//						end
-//					else
-//						begin;
-//							insereTorcedorGeralFila(aFilaTorcedoresGeral, iQuantidadeTorcedoresGeral);
-//							comprarIngressoTorcedorGeral(aListaLugarGeralTorcedores, iQuantidadeTorcedoresGeral);
-//						end;
-//				end
-//			else if (opcao = 4) then
-//				if (validaLimiteCompradorVisitante(aFilaVisitantes, iQuantidadeVisitantes) = true) then
-//						begin;
-//							write('A quantidade máxima de visitantes foi atingida! Você pode tentar comprar ingresso como torcedor na arquibancada geral.');
-//						end
-//					else
-//						begin;
-//							insereVisitanteFila(aFilaVisitantes,iQuantidadeVisitantes);
-//							comprarIngressoVisitante(aListaLugarGeralVisitantes, iQuantidadeVisitantes);
-//						end;	
-//		end;
-//		
-//		geraRelatorioFinal(iQuantidadeSocios, iQuantidadeTorcedoresCoberta, iQuantidadeTorcedoresGeral, iQuantidadeVisitantes);
-//end;
-//
-//Begin
-//	iniciaMenu();  
-//End.
 
-Program Trabalho2;
+Program Trabalho;
 
 //Constantes
 const TIPO_COMPRADOR_SOCIO = 1;
@@ -297,16 +12,28 @@ const TIPO_COMPRADOR_SOCIO = 1;
       TIPO_COMPRADOR_VISITANTE = 4;
      _TIPO_COMPRADOR_VISITANTE = 'Visitante';
 
-//Quantidade máxima de membros por tipo
 		  MAX_SOCIOS = 500;
       MAX_TORCEDORES_COBERTA = 1500;
       MAX_TORCEDORES_GERAL = 700;
       MAX_VISITANTES = 300;
-
+      
+      MAX_COBERTA = 2000;
+      MAX_GERAL = 1000;
+      
+ 			PRECO_COBERTA = 100;
+ 			PRECO_VISITANTES = 80;
+ 			PRECO_SOCIOS = 50;
+ 			PRECO_GERAL = 40;
+ 			
 type filaComprador = array[1..3000] of integer;
  		 pilhaIngressos = array[1..3000] of integer;
- 		 listaLugar = array[1..3000] of integer;
+ 		 listaLugares = array[1..3000] of integer;
 
+{
+	Retorna se um array está cheio
+	@param integer quantidadeAtual
+	@param integer quantidadeMaxima
+}
 function isCheia(quantidadeAtual: integer; quantidadeMaxima: integer): boolean;
 begin;
 	isCheia := false;
@@ -318,14 +45,117 @@ begin;
 end;
 
 {
+	Retorna se um array está vazia
+	@param integer quantidadeElemento
+}
+function isVazia(quantidadeElemento: integer): boolean;
+begin;
+	isVazia := false;
+	
+	if (quantidadeElemento = 0) then
+		begin;
+			isVazia := true;
+		end;
+end;
+
+{
+	Retorna o valor do ingresso a partir do tipo de sócio
+	@param integer iTipoComprador
+	@return string
+}
+function getNomeFilaByTipoComprador(iTipoComprador: integer): string;
+begin;
+	getNomeFilaByTipoComprador := '';
+	
+	if (iTipoComprador = TIPO_COMPRADOR_SOCIO) then
+		begin;
+			getNomeFilaByTipoComprador := _TIPO_COMPRADOR_SOCIO;
+		end
+	else if (iTipoComprador = TIPO_COMPRADOR_TORCEDOR_COBERTA) then
+		begin;
+			getNomeFilaByTipoComprador := _TIPO_COMPRADOR_TORCEDOR_COBERTA;
+		end	
+	else if (iTipoComprador = TIPO_COMPRADOR_TORCEDOR_GERAL) then
+		begin;
+			getNomeFilaByTipoComprador := _TIPO_COMPRADOR_TORCEDOR_GERAL;
+		end	
+	else if (iTipoComprador = TIPO_COMPRADOR_VISITANTE) then
+		begin;
+			getNomeFilaByTipoComprador := _TIPO_COMPRADOR_VISITANTE;
+		end	
+end;
+
+{
+	Retorna o valor do ingresso a partir do tipo de sócio
+	@param integer iTipoComprador
+	@return integer
+}
+function getValorIngressoByTipoComprador(iTipoComprador: integer): integer;
+begin;
+	getValorIngressoByTipoComprador := 0;
+	
+	if (iTipoComprador = TIPO_COMPRADOR_SOCIO) then
+		begin;
+			getValorIngressoByTipoComprador := PRECO_SOCIOS;
+		end
+	else if (iTipoComprador = TIPO_COMPRADOR_TORCEDOR_COBERTA) then
+		begin;
+			getValorIngressoByTipoComprador := PRECO_COBERTA;
+		end	
+	else if (iTipoComprador = TIPO_COMPRADOR_TORCEDOR_GERAL) then
+		begin;
+			getValorIngressoByTipoComprador := PRECO_GERAL;
+		end	
+	else if (iTipoComprador = TIPO_COMPRADOR_VISITANTE) then
+		begin;
+			getValorIngressoByTipoComprador := PRECO_VISITANTES;
+		end	
+end;
+
+{
+	Realiza pesquisa binária para encontrar o índice de um determinado elemento
+}
+function pesquisaBinaria(var lista:listaLugares; var quantidadeElementos, elemento: integer): integer;
+var inicio, fim, meio: integer;
+begin;
+	pesquisaBinaria := 0;
+	
+	inicio := 1;
+	fim := quantidadeElementos;
+	while inicio <= fim do
+		begin;
+			meio := (inicio + fim) div 2;
+			if (lista[meio] < elemento) then
+				begin;
+					inicio := meio + 1;
+				end
+			else if (lista[meio] > elemento) then
+				begin;
+					fim := meio - 1;
+				end
+			else 
+				begin;
+					pesquisaBinaria := meio;
+				end;
+		end;
+end;
+
+{
  =====================================================================================================
  =============================================== Fila ================================================
  =====================================================================================================
 }
 
+{
+	Insere um novo elemento em uma fila
+	@param filaComprador fila
+	@param integer quantidadeAtual
+	@param integer quantidadeMaxima
+	@param integer valor
+}
 procedure insereFila(var fila: filaComprador; var quantidadeAtual: integer; quantidadeMaxima: integer; valor: integer);
 begin;
-	if (isCheia(quantidadeAtual, quantidadeMaxima) == true) then
+	if (isCheia(quantidadeAtual, quantidadeMaxima) = true) then
 		begin;
 			writeln('A quantidade máxima para esta fila foi atingida!');
 		end
@@ -337,20 +167,217 @@ begin;
 end;
 
 {
+	Remove um elemento de uma fila
+	@param filaComprador fila
+	@param integer quantidadeAtual
+}
+procedure removeFila(var fila: filaComprador; var quantidadeAtual: integer);
+var i: integer;
+begin;
+	if (isVazia(quantidadeAtual) <> true) then
+		begin;
+			for i := 1 to (quantidadeAtual - 1) do
+				begin;
+					fila[i] := fila[i + 1];
+				end;
+			quantidadeAtual := quantidadeAtual - 1;
+		end
+	else 
+		begin;
+			writeln('A fila já está vazia!');
+		end;	
+end;
+
+{
+	Insere um novo comprador em uma fila
+	@param filaComprador fila
+	@param integer quantidadeAtual
+	@param integer quantidadeMaxima
+}
+procedure insereCompradorFila(var fila: filaComprador; var quantidadeAtual: integer; quantidadeMaxima: integer);
+begin;
+	insereFila(fila, quantidadeAtual, quantidadeMaxima, (quantidadeAtual + 1));
+end;
+
+{
+	Remove um comprador de uma fila
+	@param filaComprador fila
+	@param integer quantidadeAtual
+}
+procedure removeCompradorFila(var fila: filaComprador; var quantidadeAtual: integer);
+begin;
+	removeFila(fila, quantidadeAtual);	
+end;
+
+{
  =====================================================================================================
  ============================================== Pilha ================================================
  =====================================================================================================
 }
 
-procedure inserePilha(var pilha: PilhaIngressos, var quantidadeAtual: integer, valor: integer);
+{
+	Insere um novo elemento em uma pilha
+	@param PilhaIngressos pilha
+	@param integer quantidadeAtual
+	@param integer valor
+}
+procedure inserePilha(var pilha: PilhaIngressos; var quantidadeAtual, quantidadeMaxima, valor: integer);
 begin;
-	quantidadeAtual := quantidadeAtual + 1;
-	pilha[quantidadeAtual] := valor;
+	if (isCheia(quantidadeAtual, quantidadeMaxima) <> true) then
+		begin;
+			quantidadeAtual := quantidadeAtual + 1;
+			pilha[quantidadeAtual] := valor;
+		end
+	else
+		begin;
+			writeln('A pilha já está cheia!');
+		end;
 end;
 
+{
+	Remove elemento da pilha
+	@param integer quantidadeAtual
+}
 procedure removePilha(var quantidadeAtual: integer);
 begin;
-	quantidadeAtual := quantidadeAtual - 1;
+	if (isVazia(quantidadeAtual) <> true) then
+		begin;
+			quantidadeAtual := quantidadeAtual - 1;
+		end
+	else
+		begin;
+			writeln('A pilha já está vazia!');
+		end;
+end;
+
+{
+	Realiza o carregamento inicial dos ingressos
+	@param pilhaIngressos pilha
+	@param integer quantidadeAtual
+	@param integer quantidadeMaxima 
+}                               
+procedure carregaPilhaIngressos(var pilha: pilhaIngressos; var quantidadeAtual, quantidadeMaxima: integer);
+var i: integer;
+begin;
+	for i := 1 to quantidadeMaxima do
+		begin;
+			inserePilha(pilha, quantidadeAtual, quantidadeMaxima, i);
+		end;
+end;
+
+{
+	Remove um ingresso da pilha
+	@param integer quantidadeAtual
+}
+procedure removeIngressoPilha(quantidadeAtual: integer);
+begin;
+	removePilha(quantidadeAtual);
+end;
+
+{
+ =====================================================================================================
+ ============================================== LISTA ================================================
+ =====================================================================================================
+}
+
+{
+	Insere um novo elemento em uma lista
+	@param listaLugares lista
+	@param integer quantidadeAtual
+	@param integer novoElemento
+}
+procedure insereLista(var lista: listaLugares; var quantidadeAtual, quantidadeMaxima, novoElemento: integer);
+var i, j, elementoExistente: integer;
+begin;
+	i := 1;
+	if (isCheia(quantidadeAtual, quantidadeMaxima) <> true) then
+		begin;
+			while ((novoElemento > lista[i]) AND (i <= quantidadeAtual)) do
+				begin;
+					i := i + 1;
+				end;
+	    
+	    if (lista[i] = novoElemento) then
+	    	begin;
+	    		writeln('O elemento ', novoElemento, ' já está na lista');
+	    	end
+	    else
+	    	begin;
+	    		for j := quantidadeAtual downto i do
+						begin;
+							lista[j + 1] := lista[j];				
+						end;
+	
+					lista[i] := novoElemento;
+					quantidadeAtual := quantidadeAtual + 1;
+	    	end;
+		end
+	else
+		begin;
+			writeln('A lista está cheia');
+		end;
+end;
+
+{
+	Insere um novo elemento em uma lista
+	@param listaLugares lista
+	@param integer quantidadeAtual
+	@param integer elemento
+}
+procedure removeLista(var lista:listaLugares; var quantidadeElementos, elemento: integer);
+var indiceElemento, i, removeuElemento: Integer;
+begin;
+	if (isVazia(quantidadeElementos) <> true) then
+		begin;
+			indiceElemento := pesquisaBinaria(lista, quantidadeElementos, elemento);
+			
+			if (indiceElemento <> 0) then
+				begin;
+					for i := indiceElemento to (quantidadeElementos - 1) do
+						begin;
+							lista[i] := lista[i + 1];
+						end;
+					quantidadeElementos := quantidadeElementos - 1;
+					removeuElemento := 1;
+				end;
+				
+				if (removeuElemento = 0) then
+					begin;
+						writeln('O valor informado não está na lista');	
+					end;		
+		end
+	else
+		begin;
+			writeln('A lista está vazia');
+		end;	
+end;
+
+{
+	Realiza o carregamento inicial da lista de lugares disponíveis
+	@param listaLugares lista
+	@param integer quantidadeAtual
+	@param integer quantidadeLugares
+}
+procedure carregaListaLugares(var lista: listaLugares; var quantidadeAtual, quantidadeLugares: integer); 
+var i: integer;
+begin;
+	begin;
+		for i := 1 to quantidadeLugares do
+			begin;
+				insereLista(lista, quantidadeAtual, quantidadeLugares, i);
+			end;
+	end;
+end;
+
+{
+	Remove um lugar da lista de lugares disponíveis
+	@param listaLugares lista
+	@param integer quantidadeAtual
+	@param integer elemento
+}
+procedure removeLugarDisponivel(var lista:listaLugares; var quantidadeElementos, elemento: integer);
+begin;
+	removeLista(lista, quantidadeElementos, elemento);
 end;
 
 {
@@ -359,25 +386,17 @@ end;
  =====================================================================================================
 }
 
-procedure carregaPilhaIngressos(var aPilhaIngressos: pilhaIngressos, var quantidadeAtual: integer, quantidadeMaxima: integer);
+{
+	Exibe os lugares disponíves em uma arquibancada
+	@param listaLugares lista
+	@param integer quantidadeLugares
+}
+procedure exibeLocaisDisponiveis(lista: listaLugares; quantidadeLugares: integer);
 var i: integer;
 begin;
-	for i := 1 to quantidadeMaxima do
+	for i := 1 to quantidadeLugares do
 		begin;
-			quantidadeAtual := quantidadeAtual + 1;
-			aPilhaIngressos[quantidadeAtual] := i;
-		end;
-end;
-
-procedure exibeLocaisDisponiveis(aLista: listaLugarCobertaSocios, quantidadeMaxima: integer);
-var i: integer;
-begin;
-	for i := 1 to quantidadeMaxima do
-		begin;
-			if (aLista[i] = 0) then
-				begin;
-					write(i:3:0, ' - Disponível ');
-				end;
+			write(lista[i]:3:0, ' - Disponível ');
 			
 			if (i MOD 5 = 0) then
 				begin;
@@ -386,39 +405,81 @@ begin;
 		end;
 end;
 
-procedure realizaVendaIngressos(fila: filaComprador;, quantidadeFila: integer; var quantidadePilha: integer, lista: listaLugar, quantidadeMaximaPilha: integer);
+{
+	Valida se o valor informado para o lugar é válido
+	@param listaLugares lista
+	@param integer quantidadeAtual
+	@param integer lugarInformado 
+}
+function validaLugarInformadoIsValido(lista: listaLugares; quantidadeLugares, lugarInformado: integer): boolean;
+var indiceElemento: integer;
+begin;
+	validaLugarInformadoIsValido := false;
+	indiceElemento := pesquisaBinaria(lista, quantidadeLugares, lugarInformado);
+	
+	if (indiceElemento <> 0) then
+		begin;
+			validaLugarInformadoIsValido := true;	
+		end;
+end;
+
+{
+	Realiza a venda de ingressos para determinada fila
+	@param filaComprador fila
+	@param integer quantidadeFila
+	@param integer quantidadePilha
+	@param listaLugares lista
+	@param integer quantidadeLugares
+	@param string nomeFila
+}
+procedure realizaVendaIngressos(var fila: filaComprador; var quantidadeFila: integer; var quantidadePilha: integer; var lista: listaLugares; var quantidadeLugares: integer; tipoComprador:integer);
 var i, lugarDisponivel, lugarDesejado: integer;
 begin;
+	clrscr;
+	writeln('Iniciando a venda de ingressos da fila ', getNomeFilaByTipoComprador(tipoComprador));
 	for i := 1 to quantidadeFila do
 		begin;
+			writeln('Seja bem-vindo comprador de número ', i , '! Seu ingresso foi comprado com sucesso por R$', getValorIngressoByTipoComprador(tipoComprador), ' reais');
 			while (lugarDisponivel = 0) do
 				begin;
-					writeln('Ingresso comprado com sucesso!');
-					writeln('Escolha o o número do lugar desejado');
-					exibeLocaisDisponiveis(lista);
+					exibeLocaisDisponiveis(lista, quantidadeLugares);
 					readln(lugarDesejado);
 			
-					if (validaLugarInformadoIsValido(lugarDesejado, 1, MAX_COBERTA_SOCIOS) == true) then
+					if (validaLugarInformadoIsValido(listaLugares, quantidadeLugares, lugarDesejado) = true) then
 						begin;
-							if (validaLugarCobertaDisponivelSocio(aLista, lugarDesejado) = true) then
-								begin;
-									clrscr;
-									writeln('O lugar desejado não está disponível! Escolha outro!');
-								end
-							else 
-								begin;
-									marcaLugarCobertaSocio(aLista, lugarDesejado, numeroSocio);
-									removeFila(filaComprador, );
-									removePilha(quantidadePilha);
-									lugarDisponivel := 1;
-								end;
+								removeLugarDisponivel(lista, quantidadeLugares, lugarDesejado);
+								removeCompradorFila(fila, quantidadeFila);
+								removeIngressoPilha(quantidadePilha);
+								lugarDisponivel := 1;
 						end
-				else 
-					begin;
-						writeln('O lugar informado é inválido! Escolha outro!');
-					end;
-			end;			
+					else 
+						begin;
+							clrscr;
+							writeln('O lugar desejado não está disponível! Escolha outro!');
+						end;
+				end;			
 		end;
+end;
+
+{
+	Gera o relatório com o saldo final de vendas
+	@param integer iTotalSocios
+	@param integer iTotalCobertura
+	@param integer iTotalGeral
+	@param integer iTotalVisitantes
+}
+procedure geraRelatorioVenda(iTotalSocios, iTotalCobertura, iTotalGeral, iTotalVisitantes: integer);
+begin;
+	clrscr;
+	writeln('Total Arrecadado por Tipo de Ingresso:');
+	writeln('=====================================');
+	writeln(_TIPO_COMPRADOR_SOCIO    				, ': R$', iTotalSocios:4:2, ' reais');
+	writeln(_TIPO_COMPRADOR_TORCEDOR_COBERTA, ': R$', iTotalCobertura:4:2, ' reais');
+	writeln(_TIPO_COMPRADOR_TORCEDOR_GERAL  , ': R$', iTotalGeral:4:2, ' reais');
+	writeln(_TIPO_COMPRADOR_VISITANTE			  , ': R$', iTotalVisitantes:4:2, ' reais');
+	writeln('=====================================');
+	writeln('Total Arrecadado: R$', (iTotalSocios + iTotalCobertura + iTotalGeral + iTotalVisitantes):6:2);
+	writeln('=====================================');
 end;
 
 {
@@ -427,24 +488,31 @@ end;
  =====================================================================================================
 }
 
+{
+	Inicia o menu de compra de ingressos
+}
 procedure iniciaMenu();
-var opcao: integer;
+var opcao, finalizouCompras, totalSocios, totalCobertura, totalGeral, totalVisitantes, quantidadeMaximaCoberta, quantidadeMaximaGeral: integer;
 
 var filaSocios, filaTorcedoresCoberta, filaTorcedoresGeral, filaVisitantes: filaComprador;
 var quantidadeSocios, quantidadeTorcedoresCoberta, quantidadeTorcedoresGeral, quantidadeVisitantes: integer;
 
-var pilhaIngressosSocios, pilhaIngressosTorcedoresCoberta, pilhaIngressosTorcedoresGeral, pilhaIngressosVisitantes: pilhaIngressos;
-var quantidadeIngressosSocios, quantidadeIngressosTorcedoresCoberta, quantidadeIngressosTorcedoresGeral, quantidadeIngressosVisitantes: integer
+var pilhaIngressosCoberta, pilhaIngressosGeral: pilhaIngressos;
+var quantidadeIngressosCoberta, quantidadeIngressosGeral: integer;
 
-var listaLugarSocios, listaLugarTorcedoresCoberta: listaLugar;
+var listaCoberta, listaGeral: listaLugares;
+var quantidadeLugaresCoberta, quantidadeLugaresGeral: integer;
 
 begin;
-	carregaPilhaIngressos(pilhaIngressosSocios, quantidadeIngressosSocios, MAX_SOCIOS);
-	carregaPilhaIngressos(pilhaIngressosTorcedoresCoberta, quantidadeIngressosTorcedoresCoberta, MAX_TORCEDORES_COBERTA);
-	carregaPilhaIngressos(pilhaIngressosTorcedoresGeral, quantidadeIngressosTorcedoresGeral, MAX_TORCEDORES_GERAL);
-	carregaPilhaIngressos(pilhaIngressosVisitantes, quantidadeIngressosVisitantes, MAX_VISITANTES);
+	finalizouCompras := 0;
+	quantidadeMaximaCoberta := MAX_COBERTA;
+	quantidadeMaximaGeral := MAX_GERAL;
+	carregaPilhaIngressos(pilhaIngressosCoberta, quantidadeIngressosCoberta, quantidadeMaximaCoberta);
+	carregaPilhaIngressos(pilhaIngressosGeral, quantidadeIngressosGeral, quantidadeMaximaGeral);
+	carregaListaLugares(listaCoberta, quantidadeLugaresCoberta, quantidadeMaximaCoberta);
+	carregaListaLugares(listaGeral, quantidadeLugaresGeral, quantidadeMaximaGeral);
 	
-	while(opcao <> 6) do
+	while(finalizouCompras = 0) do
 		begin;
 			writeln ('    MENU    ');
 			writeln ('------------');
@@ -459,28 +527,36 @@ begin;
 			clrscr;
 			if (opcao = 1) then
 				begin;
-					insereFila(filaSocios, quantidadeSocios, MAX_SOCIOS, (quantidadeSocios + 1));
-				end;
+					insereCompradorFila(filaSocios, quantidadeSocios, MAX_SOCIOS);  
+					totalSocios := totalSocios + PRECO_SOCIOS;
+				end
 			else if (opcao = 2) then
 				begin;
-					insereFila(filaTorcedoresCoberta, quantidadeTorcedoresCoberta, MAX_TORCEDORES_COBERTA, (quantidadeTorcedoresCoberta + 1));
-				end;	
+					insereCompradorFila(filaTorcedoresCoberta, quantidadeTorcedoresCoberta, MAX_TORCEDORES_COBERTA);
+					totalCobertura := totalCobertura + PRECO_COBERTA;
+				end
 			else if (opcao = 3) then
 				begin;
-					insereFila(filaTorcedoresGeral, quantidadeTorcedoresGeral, MAX_TORCEDORES_GERAL, (quantidadeTorcedoresGeral + 1));
-				end;	
+					insereCompradorFila(filaTorcedoresGeral, quantidadeTorcedoresGeral, MAX_TORCEDORES_GERAL);
+					totalGeral := totalGeral + PRECO_GERAL;
+				end
 			else if (opcao = 4) then
 				begin;
-					insereFila(filaVisitantes, quantidadeVisitantes, MAX_VISITANTES, (quantidadeVisitantes + 1));
-				end;
+					insereCompradorFila(filaVisitantes, quantidadeVisitantes, MAX_VISITANTES);
+					totalVisitantes := totalVisitantes + PRECO_VISITANTES;
+				end
 			else if (opcao = 5) then
 				begin;
-					realizaVendaIngressos(filaSocios, quantidadeSocios, pilhaIngressosSocios, quantidadeIngressosSocios, listaLugarSocios, MAX_SOCIOS);
-					realizaVendaIngressos(filaTorcedoresCoberta, quantidadeTorcedoresCoberta, pilhaIngressosTorcedoresCoberta, quantidadeIngressosTorcedoresCoberta, listaLugarTorcedoresCoberta, MAX_TORCEDORES_COBERTA);
-					realizaVendaIngressos(filaTorcedoresGeral, quantidadeTorcedoresGeral, pilhaIngressosTorcedoresGeral, quantidadeIngressosTorcedoresGeral, listaLugarTorcedoresGeral, MAX_TORCEDORES_GERAL);
-					realizaVendaIngressos(filaVisitantes, quantidadeVisitantes, pilhaIngressosVisitantes, quantidadeIngressosVisitantes, listaLugarVisitantes, MAX_VISITANTES);
+					realizaVendaIngressos(filaSocios					 , quantidadeSocios           , quantidadeIngressosCoberta, listaCoberta, quantidadeLugaresCoberta, TIPO_COMPRADOR_SOCIO);
+					realizaVendaIngressos(filaTorcedoresCoberta, quantidadeTorcedoresCoberta, quantidadeIngressosCoberta, listaCoberta, quantidadeLugaresCoberta, TIPO_COMPRADOR_TORCEDOR_COBERTA);
+					realizaVendaIngressos(filaTorcedoresGeral	 , quantidadeTorcedoresGeral  , quantidadeIngressosGeral  , listaGeral  , quantidadeLugaresGeral  , TIPO_COMPRADOR_TORCEDOR_GERAL);
+					realizaVendaIngressos(filaVisitantes		   , quantidadeVisitantes       , quantidadeIngressosGeral  , listaGeral  , quantidadeLugaresGeral  , TIPO_COMPRADOR_VISITANTE);
+					finalizouCompras := 1;
 				end;	
 		end;
+		
+		geraRelatorioVenda(totalSocios, totalCobertura, totalGeral, totalVisitantes);
+end;
 
 Begin
 	iniciaMenu();  
