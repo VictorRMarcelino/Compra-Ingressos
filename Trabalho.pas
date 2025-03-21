@@ -114,6 +114,9 @@ end;
 
 {
 	Realiza pesquisa binária para encontrar o índice de um determinado elemento
+	@param listaLugares lista
+	@param integer quantidadeElementos
+	@param integer elemento
 	@return integer
 }
 function pesquisaBinaria(var lista:listaLugares; var quantidadeElementos, elemento: integer): integer;
@@ -510,6 +513,7 @@ begin;
 	quantidadeMaximaCoberta := MAX_COBERTA;
 	quantidadeMaximaGeral := MAX_GERAL;
 	writeln('Aguarde! Estamos carregando os ingressos disponíveis');
+	clrscr;
 	carregaPilhaIngressos(pilhaIngressosCoberta, quantidadeIngressosCoberta, quantidadeMaximaCoberta);
 	carregaPilhaIngressos(pilhaIngressosGeral	 , quantidadeIngressosGeral	 , quantidadeMaximaGeral);
 	carregaListaLugares(listaCoberta, quantidadeLugaresCoberta, quantidadeMaximaCoberta);
