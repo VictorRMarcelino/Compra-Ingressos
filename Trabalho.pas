@@ -125,7 +125,7 @@ begin;
 	while inicio <= fim do
 		begin;
 			meio := (inicio + fim) div 2;
-			if (lista[meio] < elemento) then
+			if (lista[meio] < elemento) then1
 				begin;
 					inicio := meio + 1;
 				end
