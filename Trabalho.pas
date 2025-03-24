@@ -445,7 +445,7 @@ begin;
 	for i := 1 to quantidadeTotalFila do
 		begin;
 			lugarDisponivel := 0;
-			writeln('Seja bem-vindo comprador de número ', i , '! Seu ingresso foi comprado com sucesso por R$', getValorIngressoByTipoComprador(tipoComprador), ' reais');
+			writeln('Seja bem-vindo comprador de número ', i , ' (', getNomeFilaByTipoComprador(tipoComprador), ')! Seu ingresso foi comprado com sucesso por R$', getValorIngressoByTipoComprador(tipoComprador), ' reais');
 			while (lugarDisponivel = 0) do
 				begin;
 					exibeLocaisDisponiveis(lista, quantidadeLugares);
@@ -515,11 +515,11 @@ begin;
 	quantidadeMaximaGeral := MAX_GERAL;
 	finalizouCompra := 0;
 	writeln('Aguarde! Estamos carregando os ingressos disponíveis');
-	clrscr;
 	carregaPilhaIngressos(pilhaIngressosCoberta, quantidadeIngressosCoberta, quantidadeMaximaCoberta);
 	carregaPilhaIngressos(pilhaIngressosGeral	 , quantidadeIngressosGeral	 , quantidadeMaximaGeral);
 	carregaListaLugares(listaCoberta, quantidadeLugaresCoberta, quantidadeMaximaCoberta);
 	carregaListaLugares(listaGeral	, quantidadeLugaresGeral	, quantidadeMaximaGeral);
+	clrscr;
 	
 	while(finalizouCompra <> 1) do
 		begin;
