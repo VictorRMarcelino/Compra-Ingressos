@@ -1,5 +1,3 @@
-//Program Trabalho;
-
 Program Trabalho;
 
 //Constantes
@@ -12,13 +10,13 @@ const TIPO_COMPRADOR_SOCIO = 1;
       TIPO_COMPRADOR_VISITANTE = 4;
      _TIPO_COMPRADOR_VISITANTE = 'Visitante';
 
-		  MAX_SOCIOS = 500;
-      MAX_TORCEDORES_COBERTA = 1500;
-      MAX_TORCEDORES_GERAL = 700;
-      MAX_VISITANTES = 300;
+		  MAX_SOCIOS = 5;
+      MAX_TORCEDORES_COBERTA = 15;
+      MAX_TORCEDORES_GERAL = 7;
+      MAX_VISITANTES = 3;
       
-      MAX_COBERTA = 2000;
-      MAX_GERAL = 1000;
+      MAX_COBERTA = 200;
+      MAX_GERAL = 100;
       
  			PRECO_COBERTA = 100;
  			PRECO_VISITANTES = 80;
@@ -439,12 +437,14 @@ end;
 	@param string nomeFila
 }
 procedure realizaVendaIngressos(var fila: filaComprador; var quantidadeFila: integer; var quantidadePilha: integer; var lista: listaLugares; var quantidadeLugares: integer; tipoComprador:integer);
-var i, lugarDisponivel, lugarDesejado: integer;
+var i, lugarDisponivel, lugarDesejado, quantidadeTotalFila: integer;
 begin;
 	clrscr;
 	writeln('Iniciando a venda de ingressos da fila ', getNomeFilaByTipoComprador(tipoComprador));
-	for i := 1 to quantidadeFila do
+	quantidadeTotalFila := quantidadeFila;
+	for i := 1 to quantidadeTotalFila do
 		begin;
+			lugarDisponivel := 0;
 			writeln('Seja bem-vindo comprador de número ', i , '! Seu ingresso foi comprado com sucesso por R$', getValorIngressoByTipoComprador(tipoComprador), ' reais');
 			while (lugarDisponivel = 0) do
 				begin;
@@ -457,6 +457,7 @@ begin;
 								removeCompradorFila(fila, quantidadeFila);
 								removeIngressoPilha(quantidadePilha);
 								lugarDisponivel := 1;
+								clrscr;	
 						end
 					else 
 						begin;
@@ -498,7 +499,7 @@ end;
 	Inicia o menu de compra de ingressos
 }
 procedure iniciaMenu();
-var opcao, totalSocios, totalCobertura, totalGeral, totalVisitantes, quantidadeMaximaCoberta, quantidadeMaximaGeral: integer;
+var opcao, totalSocios, totalCobertura, totalGeral, totalVisitantes, quantidadeMaximaCoberta, quantidadeMaximaGeral, finalizouCompra: integer;
 
 var filaSocios, filaTorcedoresCoberta, filaTorcedoresGeral, filaVisitantes: filaComprador;
 var quantidadeSocios, quantidadeTorcedoresCoberta, quantidadeTorcedoresGeral, quantidadeVisitantes: integer;
@@ -512,6 +513,7 @@ var quantidadeLugaresCoberta, quantidadeLugaresGeral: integer;
 begin;
 	quantidadeMaximaCoberta := MAX_COBERTA;
 	quantidadeMaximaGeral := MAX_GERAL;
+	finalizouCompra := 0;
 	writeln('Aguarde! Estamos carregando os ingressos disponíveis');
 	clrscr;
 	carregaPilhaIngressos(pilhaIngressosCoberta, quantidadeIngressosCoberta, quantidadeMaximaCoberta);
@@ -519,7 +521,7 @@ begin;
 	carregaListaLugares(listaCoberta, quantidadeLugaresCoberta, quantidadeMaximaCoberta);
 	carregaListaLugares(listaGeral	, quantidadeLugaresGeral	, quantidadeMaximaGeral);
 	
-	while(opcao <> 5) do
+	while(finalizouCompra <> 1) do
 		begin;
 			writeln ('    MENU    ');
 			writeln ('------------');
@@ -529,6 +531,7 @@ begin;
 			writeln (TIPO_COMPRADOR_TORCEDOR_GERAL, ' - Entrar na fila (', _TIPO_COMPRADOR_TORCEDOR_GERAL, ')');
 			writeln (TIPO_COMPRADOR_VISITANTE, ' - Entrar na fila (', _TIPO_COMPRADOR_VISITANTE, ')');
 			writeln ('5 - Realizar compra de Ingressos');
+			writeln ('6 - Sair');
 			writeln;
 			readln(opcao);
 			clrscr;
@@ -562,10 +565,15 @@ begin;
 					realizaVendaIngressos(filaTorcedoresCoberta, quantidadeTorcedoresCoberta, quantidadeIngressosCoberta, listaCoberta, quantidadeLugaresCoberta, TIPO_COMPRADOR_TORCEDOR_COBERTA);
 					realizaVendaIngressos(filaTorcedoresGeral	 , quantidadeTorcedoresGeral  , quantidadeIngressosGeral  , listaGeral  , quantidadeLugaresGeral  , TIPO_COMPRADOR_TORCEDOR_GERAL);
 					realizaVendaIngressos(filaVisitantes		   , quantidadeVisitantes       , quantidadeIngressosGeral  , listaGeral  , quantidadeLugaresGeral  , TIPO_COMPRADOR_VISITANTE);
-				end;	
+					geraRelatorioVenda(totalSocios, totalCobertura, totalGeral, totalVisitantes);
+					finalizouCompra := 1;
+				end
+			else if (opcao = 6) then
+				begin;
+					writeln('Compras canceladas!');
+					finalizouCompra := 1;
+				end;
 		end;
-		
-		geraRelatorioVenda(totalSocios, totalCobertura, totalGeral, totalVisitantes);
 end;
 
 Begin
