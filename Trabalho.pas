@@ -1,5 +1,6 @@
 Program Trabalho;
 
+
 //Constantes
 const TIPO_COMPRADOR_SOCIO = 1;
  		 _TIPO_COMPRADOR_SOCIO = 'Sócio';
@@ -547,7 +548,7 @@ begin;
 	valorIngressoGeral := PRECO_GERAL;
 	valorIngressoVisitante := PRECO_VISITANTES;
 	finalizouCompra := 0;
-	writeln('Aguarde! Estamos carregando os ingressos dispon?veis');
+	writeln('Aguarde! Estamos carregando os ingressos disponíveis');
 	carregaPilhaIngressos(pilhaIngressosCoberta, quantidadeIngressosCoberta, quantidadeMaximaCoberta);
 	carregaPilhaIngressos(pilhaIngressosGeral	 , quantidadeIngressosGeral	 , quantidadeMaximaGeral);
 	carregaListaLugares(listaCoberta, quantidadeLugaresCoberta, quantidadeMaximaCoberta);
