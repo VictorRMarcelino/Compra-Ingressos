@@ -2,7 +2,7 @@ Program Trabalho;
 
 //Constantes
 const TIPO_COMPRADOR_SOCIO = 1;
- 		 _TIPO_COMPRADOR_SOCIO = 'Sócio';
+ 		 _TIPO_COMPRADOR_SOCIO = 'S?cio';
       TIPO_COMPRADOR_TORCEDOR_COBERTA = 2;
      _TIPO_COMPRADOR_TORCEDOR_COBERTA = 'Torcedor - Coberta';
       TIPO_COMPRADOR_TORCEDOR_GERAL = 3;
@@ -28,7 +28,7 @@ type filaComprador = array[1..3000] of integer;
  		 listaLugares = array[1..3000] of integer;
 
 {
-	Retorna se um array está cheio
+	Retorna se um array est? cheio
 	@param integer quantidadeAtual
 	@param integer quantidadeMaxima
 }
@@ -43,7 +43,7 @@ begin;
 end;
 
 {
-	Retorna se um array está vazia
+	Retorna se um array est? vazia
 	@param integer quantidadeElemento
 }
 function isVazia(quantidadeElemento: integer): boolean;
@@ -57,7 +57,7 @@ begin;
 end;
 
 {
-	Retorna o valor do ingresso a partir do tipo de sócio
+	Retorna o valor do ingresso a partir do tipo de s?cio
 	@param integer iTipoComprador
 	@return string
 }
@@ -84,7 +84,7 @@ begin;
 end;
 
 {
-	Retorna o valor do ingresso a partir do tipo de sócio
+	Retorna o valor do ingresso a partir do tipo de s?cio
 	@param integer iTipoComprador
 	@return integer
 }
@@ -111,7 +111,7 @@ begin;
 end;
 
 {
-	Realiza pesquisa binária para encontrar o índice de um determinado elemento
+	Realiza pesquisa bin?ria para encontrar o ?ndice de um determinado elemento
 	@param listaLugares lista
 	@param integer quantidadeElementos
 	@param integer elemento
@@ -160,7 +160,7 @@ procedure insereFila(var fila: filaComprador; var quantidadeAtual: integer; quan
 begin;
 	if (isCheia(quantidadeAtual, quantidadeMaxima) = true) then
 		begin;
-			writeln('A quantidade máxima para esta fila foi atingida!');
+			writeln('A quantidade m?xima para esta fila foi atingida!');
 		end
 	else
 		begin;
@@ -187,7 +187,7 @@ begin;
 		end
 	else 
 		begin;
-			writeln('A fila já está vazia!');
+			writeln('A fila j? est? vazia!');
 		end;	
 end;
 
@@ -233,7 +233,7 @@ begin;
 		end
 	else
 		begin;
-			writeln('A pilha já está cheia!');
+			writeln('A pilha j? est? cheia!');
 		end;
 end;
 
@@ -249,7 +249,7 @@ begin;
 		end
 	else
 		begin;
-			writeln('A pilha já está vazia!');
+			writeln('A pilha j? est? vazia!');
 		end;
 end;
 
@@ -302,7 +302,7 @@ begin;
 	    
 	    if (lista[i] = novoElemento) then
 	    	begin;
-	    		writeln('O elemento ', novoElemento, ' já está na lista');
+	    		writeln('O elemento ', novoElemento, ' j? est? na lista');
 	    	end
 	    else
 	    	begin;
@@ -317,7 +317,7 @@ begin;
 		end
 	else
 		begin;
-			writeln('A lista está cheia');
+			writeln('A lista est? cheia');
 		end;
 end;
 
@@ -346,17 +346,17 @@ begin;
 				
 				if (removeuElemento = 0) then
 					begin;
-						writeln('O valor informado não está na lista');	
+						writeln('O valor informado n?o est? na lista');	
 					end;		
 		end
 	else
 		begin;
-			writeln('A lista está vazia');
+			writeln('A lista est? vazia');
 		end;	
 end;
 
 {
-	Realiza o carregamento inicial da lista de lugares disponíveis
+	Realiza o carregamento inicial da lista de lugares dispon?veis
 	@param listaLugares lista
 	@param integer quantidadeAtual
 	@param integer quantidadeLugares
@@ -373,7 +373,7 @@ begin;
 end;
 
 {
-	Remove um lugar da lista de lugares disponíveis
+	Remove um lugar da lista de lugares dispon?veis
 	@param listaLugares lista
 	@param integer quantidadeAtual
 	@param integer elemento
@@ -390,7 +390,7 @@ end;
 }
 
 {
-	Exibe os lugares disponíves em uma arquibancada
+	Exibe os lugares dispon?ves em uma arquibancada
 	@param listaLugares lista
 	@param integer quantidadeLugares
 }
@@ -399,7 +399,7 @@ var i: integer;
 begin;
 	for i := 1 to quantidadeLugares do
 		begin;
-			write(lista[i]:3:0, ' - Disponível ');
+			write(lista[i]:3:0, ' - Dispon?vel ');
 			
 			if (i MOD 5 = 0) then
 				begin;
@@ -410,7 +410,7 @@ begin;
 end;
 
 {
-	Valida se o valor informado para o lugar é válido
+	Valida se o valor informado para o lugar ? v?lido
 	@param listaLugares lista
 	@param integer quantidadeAtual
 	@param integer lugarInformado 
@@ -436,7 +436,7 @@ end;
 	@param integer quantidadeLugares
 	@param string nomeFila
 }
-procedure realizaVendaIngressos(var fila: filaComprador; var quantidadeFila: integer; var quantidadePilha: integer; var lista: listaLugares; var quantidadeLugares: integer; tipoComprador:integer);
+procedure realizaVendaIngressos(var fila: filaComprador; var quantidadeFila: integer; var quantidadePilha: integer; var lista: listaLugares; var quantidadeLugares: integer; tipoComprador: integer; var valorTotal, valorIngresso: integer);
 var i, lugarDisponivel, lugarDesejado, quantidadeTotalFila: integer;
 begin;
 	clrscr;
@@ -445,7 +445,7 @@ begin;
 	for i := 1 to quantidadeTotalFila do
 		begin;
 			lugarDisponivel := 0;
-			writeln('Seja bem-vindo comprador de número ', i , ' (', getNomeFilaByTipoComprador(tipoComprador), ')! Seu ingresso foi comprado com sucesso por R$', getValorIngressoByTipoComprador(tipoComprador), ' reais');
+			writeln('Seja bem-vindo comprador de n?mero ', i , ' (', getNomeFilaByTipoComprador(tipoComprador), ')! Seu ingresso foi comprado com sucesso por R$', getValorIngressoByTipoComprador(tipoComprador), ' reais');
 			while (lugarDisponivel = 0) do
 				begin;
 					exibeLocaisDisponiveis(lista, quantidadeLugares);
@@ -456,20 +456,21 @@ begin;
 								removeLugarDisponivel(lista, quantidadeLugares, lugarDesejado);
 								removeCompradorFila(fila, quantidadeFila);
 								removeIngressoPilha(quantidadePilha);
+								valorTotal := valorTotal + valorIngresso;
 								lugarDisponivel := 1;
 								clrscr;	
 						end
 					else 
 						begin;
 							clrscr;
-							writeln('O lugar desejado não está disponível! Escolha outro!');
+							writeln('O lugar desejado n?o est? dispon?vel! Escolha outro!');
 						end;
 				end;			
 		end;
 end;
 
 {
-	Gera o relatório com o saldo final de vendas
+	Gera o relat?rio com o saldo final de vendas
 	@param integer iTotalSocios
 	@param integer iTotalCobertura
 	@param integer iTotalGeral
@@ -477,16 +478,28 @@ end;
 }
 procedure geraRelatorioVenda(iTotalSocios, iTotalCobertura, iTotalGeral, iTotalVisitantes: integer);
 begin;
+	
 	clrscr;
-	writeln('Total Arrecadado por Tipo de Ingresso:');
-	writeln('=====================================');
-	writeln(_TIPO_COMPRADOR_SOCIO    				, ': R$', iTotalSocios:4:2, ' reais');
-	writeln(_TIPO_COMPRADOR_TORCEDOR_COBERTA, ': R$', iTotalCobertura:4:2, ' reais');
-	writeln(_TIPO_COMPRADOR_TORCEDOR_GERAL  , ': R$', iTotalGeral:4:2, ' reais');
-	writeln(_TIPO_COMPRADOR_VISITANTE			  , ': R$', iTotalVisitantes:4:2, ' reais');
-	writeln('=====================================');
-	writeln('Total Arrecadado: R$', (iTotalSocios + iTotalCobertura + iTotalGeral + iTotalVisitantes):6:2);
-	writeln('=====================================');
+	textcolor(white);
+	writeln('=======================================');
+	textcolor(red);
+	writeln(' Total Arrecadado por Tipo de Ingresso:');
+	textcolor(white);
+	writeln('=======================================');
+	textcolor(cyan);
+	writeln(' ',_TIPO_COMPRADOR_SOCIO    				, ': R$',	iTotalSocios:4:2, ' reais');
+	textcolor(cyan);
+	writeln(' ',_TIPO_COMPRADOR_TORCEDOR_COBERTA, ': R$', iTotalCobertura:4:2, ' reais');
+	textcolor(cyan);
+	writeln(' ',_TIPO_COMPRADOR_TORCEDOR_GERAL  , ': R$', iTotalGeral:4:2, ' reais');
+	textcolor(cyan);
+	writeln(' ',_TIPO_COMPRADOR_VISITANTE			  , ': R$', iTotalVisitantes:4:2, ' reais');
+	textcolor(white);
+	writeln('=======================================');
+	textcolor(red);
+	writeln(' Total Arrecadado: R$', (iTotalSocios + iTotalCobertura + iTotalGeral + iTotalVisitantes):6:2);
+	textcolor(white);
+	writeln('=======================================');
 end;
 
 {
@@ -499,7 +512,22 @@ end;
 	Inicia o menu de compra de ingressos
 }
 procedure iniciaMenu();
-var opcao, totalSocios, totalCobertura, totalGeral, totalVisitantes, quantidadeMaximaCoberta, quantidadeMaximaGeral, finalizouCompra: integer;
+var opcao, 
+	 	totalSocios, 
+		totalCobertura, 
+		totalGeral, 
+		totalVisitantes, 
+		quantidadeMaximaCoberta, 
+		quantidadeMaximaGeral, 
+	  finalizouCompra,
+	  totalIngressoSocios,
+		totalIngressoCoberta, 
+		totalIngressoGeral, 
+		totalIngressoVisitante,
+		valorIngressoSocios,
+		valorIngressoCoberta, 
+		valorIngressoGeral, 
+		valorIngressoVisitante: integer;
 
 var filaSocios, filaTorcedoresCoberta, filaTorcedoresGeral, filaVisitantes: filaComprador;
 var quantidadeSocios, quantidadeTorcedoresCoberta, quantidadeTorcedoresGeral, quantidadeVisitantes: integer;
@@ -513,8 +541,12 @@ var quantidadeLugaresCoberta, quantidadeLugaresGeral: integer;
 begin;
 	quantidadeMaximaCoberta := MAX_COBERTA;
 	quantidadeMaximaGeral := MAX_GERAL;
+	valorIngressoSocios := PRECO_SOCIOS;
+	valorIngressoCoberta := PRECO_COBERTA;
+	valorIngressoGeral := PRECO_GERAL;
+	valorIngressoVisitante := PRECO_VISITANTES;
 	finalizouCompra := 0;
-	writeln('Aguarde! Estamos carregando os ingressos disponíveis');
+	writeln('Aguarde! Estamos carregando os ingressos dispon?veis');
 	carregaPilhaIngressos(pilhaIngressosCoberta, quantidadeIngressosCoberta, quantidadeMaximaCoberta);
 	carregaPilhaIngressos(pilhaIngressosGeral	 , quantidadeIngressosGeral	 , quantidadeMaximaGeral);
 	carregaListaLugares(listaCoberta, quantidadeLugaresCoberta, quantidadeMaximaCoberta);
@@ -537,35 +569,31 @@ begin;
 			clrscr;
 			if (opcao = 1) then
 				begin;
-					insereCompradorFila(filaSocios, quantidadeSocios, MAX_SOCIOS);  
-					totalSocios := totalSocios + PRECO_SOCIOS;
-					writeln('Comprador entrou na fila de Sócios com sucesso!');
+					insereCompradorFila(filaSocios, quantidadeSocios, MAX_SOCIOS);
+					writeln('Comprador ',quantidadeSocios,' entrou na fila de S?cios com sucesso!');
 				end
 			else if (opcao = 2) then
 				begin;
 					insereCompradorFila(filaTorcedoresCoberta, quantidadeTorcedoresCoberta, MAX_TORCEDORES_COBERTA);
-					totalCobertura := totalCobertura + PRECO_COBERTA;
-					writeln('Comprador entrou na fila de Torcedores (Coberta) com sucesso!');
+					writeln('Comprador ',quantidadeTorcedoresCoberta,' entrou na fila de Torcedores (Coberta) com sucesso!');
 				end
 			else if (opcao = 3) then
 				begin;
 					insereCompradorFila(filaTorcedoresGeral, quantidadeTorcedoresGeral, MAX_TORCEDORES_GERAL);
-					totalGeral := totalGeral + PRECO_GERAL;
-					writeln('Comprador entrou na fila de Torcedores (Geral) com sucesso!');
+					writeln('Comprador ',quantidadeTorcedoresGeral,' entrou na fila de Torcedores (Geral) com sucesso!');
 				end
 			else if (opcao = 4) then
 				begin;
 					insereCompradorFila(filaVisitantes, quantidadeVisitantes, MAX_VISITANTES);
-					totalVisitantes := totalVisitantes + PRECO_VISITANTES;
-					writeln('Comprador entrou na fila de Visitantes com sucesso!');
+					writeln('Comprador ',quantidadeVisitantes,' entrou na fila de Visitantes com sucesso!');
 				end
 			else if (opcao = 5) then
 				begin;
-					realizaVendaIngressos(filaSocios					 , quantidadeSocios           , quantidadeIngressosCoberta, listaCoberta, quantidadeLugaresCoberta, TIPO_COMPRADOR_SOCIO);
-					realizaVendaIngressos(filaTorcedoresCoberta, quantidadeTorcedoresCoberta, quantidadeIngressosCoberta, listaCoberta, quantidadeLugaresCoberta, TIPO_COMPRADOR_TORCEDOR_COBERTA);
-					realizaVendaIngressos(filaTorcedoresGeral	 , quantidadeTorcedoresGeral  , quantidadeIngressosGeral  , listaGeral  , quantidadeLugaresGeral  , TIPO_COMPRADOR_TORCEDOR_GERAL);
-					realizaVendaIngressos(filaVisitantes		   , quantidadeVisitantes       , quantidadeIngressosGeral  , listaGeral  , quantidadeLugaresGeral  , TIPO_COMPRADOR_VISITANTE);
-					geraRelatorioVenda(totalSocios, totalCobertura, totalGeral, totalVisitantes);
+					realizaVendaIngressos(filaSocios					 , quantidadeSocios           , quantidadeIngressosCoberta, listaCoberta, quantidadeLugaresCoberta, TIPO_COMPRADOR_SOCIO					 , totalIngressoSocios	  , valorIngressoSocios);
+					realizaVendaIngressos(filaTorcedoresCoberta, quantidadeTorcedoresCoberta, quantidadeIngressosCoberta, listaCoberta, quantidadeLugaresCoberta, TIPO_COMPRADOR_TORCEDOR_COBERTA, totalIngressoCoberta   , valorIngressoCoberta);
+					realizaVendaIngressos(filaTorcedoresGeral	 , quantidadeTorcedoresGeral  , quantidadeIngressosGeral  , listaGeral  , quantidadeLugaresGeral  , TIPO_COMPRADOR_TORCEDOR_GERAL  , totalIngressoGeral			, valorIngressoGeral);
+					realizaVendaIngressos(filaVisitantes		   , quantidadeVisitantes       , quantidadeIngressosGeral  , listaGeral  , quantidadeLugaresGeral  , TIPO_COMPRADOR_VISITANTE	  	 , totalIngressoVisitante , valorIngressoVisitante);
+					geraRelatorioVenda(totalIngressoSocios, totalIngressoCoberta, totalIngressoGeral, totalIngressoVisitante);
 					finalizouCompra := 1;
 				end
 			else if (opcao = 6) then
@@ -577,5 +605,6 @@ begin;
 end;
 
 Begin
+	TextBackground(black);
 	iniciaMenu();  
 End.
