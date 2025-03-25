@@ -2,7 +2,7 @@ Program Trabalho;
 
 //Constantes
 const TIPO_COMPRADOR_SOCIO = 1;
- 		 _TIPO_COMPRADOR_SOCIO = 'S?cio';
+ 		 _TIPO_COMPRADOR_SOCIO = 'Sócio';
       TIPO_COMPRADOR_TORCEDOR_COBERTA = 2;
      _TIPO_COMPRADOR_TORCEDOR_COBERTA = 'Torcedor - Coberta';
       TIPO_COMPRADOR_TORCEDOR_GERAL = 3;
@@ -28,7 +28,7 @@ type filaComprador = array[1..3000] of integer;
  		 listaLugares = array[1..3000] of integer;
 
 {
-	Retorna se um array est? cheio
+	Retorna se um array está cheio
 	@param integer quantidadeAtual
 	@param integer quantidadeMaxima
 }
@@ -43,7 +43,7 @@ begin;
 end;
 
 {
-	Retorna se um array est? vazia
+	Retorna se um array está vazia
 	@param integer quantidadeElemento
 }
 function isVazia(quantidadeElemento: integer): boolean;
@@ -111,7 +111,7 @@ begin;
 end;
 
 {
-	Realiza pesquisa bin?ria para encontrar o ?ndice de um determinado elemento
+	Realiza pesquisa binária para encontrar o índice de um determinado elemento
 	@param listaLugares lista
 	@param integer quantidadeElementos
 	@param integer elemento
@@ -160,7 +160,7 @@ procedure insereFila(var fila: filaComprador; var quantidadeAtual: integer; quan
 begin;
 	if (isCheia(quantidadeAtual, quantidadeMaxima) = true) then
 		begin;
-			writeln('A quantidade m?xima para esta fila foi atingida!');
+			writeln('A quantidade máxima para esta fila foi atingida!');
 		end
 	else
 		begin;
@@ -187,7 +187,7 @@ begin;
 		end
 	else 
 		begin;
-			writeln('A fila j? est? vazia!');
+			writeln('A fila está vazia!');
 		end;	
 end;
 
@@ -233,7 +233,7 @@ begin;
 		end
 	else
 		begin;
-			writeln('A pilha j? est? cheia!');
+			writeln('A pilha está cheia!');
 		end;
 end;
 
@@ -249,7 +249,7 @@ begin;
 		end
 	else
 		begin;
-			writeln('A pilha j? est? vazia!');
+			writeln('A pilha está vazia!');
 		end;
 end;
 
@@ -302,7 +302,7 @@ begin;
 	    
 	    if (lista[i] = novoElemento) then
 	    	begin;
-	    		writeln('O elemento ', novoElemento, ' j? est? na lista');
+	    		writeln('O elemento ', novoElemento, ' já está na lista');
 	    	end
 	    else
 	    	begin;
@@ -317,7 +317,7 @@ begin;
 		end
 	else
 		begin;
-			writeln('A lista est? cheia');
+			writeln('A lista está cheia');
 		end;
 end;
 
@@ -346,17 +346,17 @@ begin;
 				
 				if (removeuElemento = 0) then
 					begin;
-						writeln('O valor informado n?o est? na lista');	
+						writeln('O valor informado não está na lista');	
 					end;		
 		end
 	else
 		begin;
-			writeln('A lista est? vazia');
+			writeln('A lista está vazia');
 		end;	
 end;
 
 {
-	Realiza o carregamento inicial da lista de lugares dispon?veis
+	Realiza o carregamento inicial da lista de lugares disponíveis
 	@param listaLugares lista
 	@param integer quantidadeAtual
 	@param integer quantidadeLugares
@@ -373,7 +373,7 @@ begin;
 end;
 
 {
-	Remove um lugar da lista de lugares dispon?veis
+	Remove um lugar da lista de lugares disponíveis
 	@param listaLugares lista
 	@param integer quantidadeAtual
 	@param integer elemento
@@ -390,7 +390,7 @@ end;
 }
 
 {
-	Exibe os lugares dispon?ves em uma arquibancada
+	Exibe os lugares disponíves em uma arquibancada
 	@param listaLugares lista
 	@param integer quantidadeLugares
 }
@@ -399,7 +399,7 @@ var i: integer;
 begin;
 	for i := 1 to quantidadeLugares do
 		begin;
-			write(lista[i]:3:0, ' - Dispon?vel ');
+			write(lista[i]:3:0, ' - Disponível ');
 			
 			if (i MOD 5 = 0) then
 				begin;
@@ -410,7 +410,7 @@ begin;
 end;
 
 {
-	Valida se o valor informado para o lugar ? v?lido
+	Valida se o valor informado para o lugar é válido
 	@param listaLugares lista
 	@param integer quantidadeAtual
 	@param integer lugarInformado 
@@ -437,15 +437,15 @@ end;
 	@param string nomeFila
 }
 procedure realizaVendaIngressos(var fila: filaComprador; var quantidadeFila: integer; var quantidadePilha: integer; var lista: listaLugares; var quantidadeLugares: integer; tipoComprador: integer; var valorTotal, valorIngresso: integer);
-var i, lugarDisponivel, lugarDesejado, quantidadeTotalFila: integer;
+var i, lugarDisponivel, lugarDesejado: integer;
 begin;
 	clrscr;
+	i := 1;
 	writeln('Iniciando a venda de ingressos da fila ', getNomeFilaByTipoComprador(tipoComprador));
-	quantidadeTotalFila := quantidadeFila;
-	for i := 1 to quantidadeTotalFila do
+	while(isVazia(quantidadeFila) <> true) do
 		begin;
 			lugarDisponivel := 0;
-			writeln('Seja bem-vindo comprador de n?mero ', i , ' (', getNomeFilaByTipoComprador(tipoComprador), ')! Seu ingresso foi comprado com sucesso por R$', getValorIngressoByTipoComprador(tipoComprador), ' reais');
+			writeln('Seja bem-vindo comprador de número ', i , ' (', getNomeFilaByTipoComprador(tipoComprador), ')! Seu ingresso foi comprado com sucesso por R$', getValorIngressoByTipoComprador(tipoComprador), ' reais');
 			while (lugarDisponivel = 0) do
 				begin;
 					exibeLocaisDisponiveis(lista, quantidadeLugares);
@@ -458,12 +458,13 @@ begin;
 								removeIngressoPilha(quantidadePilha);
 								valorTotal := valorTotal + valorIngresso;
 								lugarDisponivel := 1;
+								i := i + 1;
 								clrscr;	
 						end
 					else 
 						begin;
 							clrscr;
-							writeln('O lugar desejado n?o est? dispon?vel! Escolha outro!');
+							writeln('O lugar desejado não está disponível! Escolha outro!');
 						end;
 				end;			
 		end;
@@ -570,22 +571,22 @@ begin;
 			if (opcao = 1) then
 				begin;
 					insereCompradorFila(filaSocios, quantidadeSocios, MAX_SOCIOS);
-					writeln('Comprador ',quantidadeSocios,' entrou na fila de S?cios com sucesso!');
+					writeln('Comprador ',quantidadeSocios,' entrou na fila de ', _TIPO_COMPRADOR_SOCIO, ' com sucesso!');
 				end
 			else if (opcao = 2) then
 				begin;
 					insereCompradorFila(filaTorcedoresCoberta, quantidadeTorcedoresCoberta, MAX_TORCEDORES_COBERTA);
-					writeln('Comprador ',quantidadeTorcedoresCoberta,' entrou na fila de Torcedores (Coberta) com sucesso!');
+					writeln('Comprador ',quantidadeTorcedoresCoberta,' entrou na fila de ', _TIPO_COMPRADOR_TORCEDOR_COBERTA, ' com sucesso!');
 				end
 			else if (opcao = 3) then
 				begin;
 					insereCompradorFila(filaTorcedoresGeral, quantidadeTorcedoresGeral, MAX_TORCEDORES_GERAL);
-					writeln('Comprador ',quantidadeTorcedoresGeral,' entrou na fila de Torcedores (Geral) com sucesso!');
+					writeln('Comprador ',quantidadeTorcedoresGeral,' entrou na fila de ', _TIPO_COMPRADOR_TORCEDOR_GERAL, ' com sucesso!');
 				end
 			else if (opcao = 4) then
 				begin;
 					insereCompradorFila(filaVisitantes, quantidadeVisitantes, MAX_VISITANTES);
-					writeln('Comprador ',quantidadeVisitantes,' entrou na fila de Visitantes com sucesso!');
+					writeln('Comprador ',quantidadeVisitantes,' entrou na fila de ', _TIPO_COMPRADOR_VISITANTE, ' com sucesso!');
 				end
 			else if (opcao = 5) then
 				begin;
